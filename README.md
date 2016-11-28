@@ -71,5 +71,15 @@ If you have more GPUs and want to save your time, set `nGPU`, `batchSize` larger
 ##### For VGG, NMG, P-NMG, R-NMG, PR-NMG over Cifar100
 * `-nLayer`: Number of conv or mg-conv layers in each block
 
+##### For spatial transformer or segmentation
+```
+-dataset:  mnist-seg (segmentation)
+        || mnist-spt (spatial transformation)
+        || mnist-rot (pure rotation)
+        || mnist-sca (pure scaling)
+        || mnist-tra (pure translation)
+        || mnist-aff (pure affine transformation)
+```
+
 ##### For saliency map
 * `-trainedNet`: path to trained network to render saliency map
