@@ -6,8 +6,8 @@ This implements the work from Neural-MultiGrid by Tsung-Wei Ke, Michael Maire an
 Please make sure that following libraries are well installed.
 
 1. torch
-2. cudnn v4 or v5
-3. cuda 7.5
+2. cudnn v5 (or above)
+3. cuda 7.5 (or above)
 
 Also make sure you have installed following torch packages
 
@@ -20,14 +20,15 @@ Also make sure you have installed following torch packages
 7. image
 8. nccl
 
-### Dataset
+### Dataset preparation
 
-1. [Cifar100-whitened](https://yadi.sk/d/em4b0FMgrnqxy)
-2. MNIST-cluttered (we borrow and revise from [DeepMind's code](https://github.com/deepmind/mnist-cluttered))
+1. Download [Cifar100-whitened](https://yadi.sk/d/em4b0FMgrnqxy)
+2. Download MNIST-cluttered (we borrow and revise from [DeepMind's code](https://github.com/deepmind/mnist-cluttered))
 ```
 > cd utils/mnist-cluttered
 > th download_mnist.lua
 
+// Generating data & labels:
 // For segmentation
 > th segmentation.lua
 // For spatial transformer
@@ -40,18 +41,46 @@ Also make sure you have installed following torch packages
 > th translation.lua
 ```
 
-### Train the model
-
-For the following steps, we assume that you will put cifar and mnist data under `HOME_PREFIX/data/Cifar100-whitened/` and `HOME_PREFIX/data/mnist-cluttered/`
+Make sure that cifar and mnist data are located at `HOME_PREFIX/data/Cifar100-whitened/` and `HOME_PREFIX/data/mnist-cluttered/`
 ```
 // Set the environment up
 > export HOME_PREFIX=/path/to/dataset/rootdir
-
-// Train the model
-> sh scripts/prnmg.sh
 ```
 
-### Options
+### Classification over Cifar100
+
+```
+> sh scripts/prnmg.sh (or vgg.sh, resnet.sh, nmg.sh, pnmg.sh, rnmg.sh, prnmg.sh)
+```
+##### Options:
+
+* `-nLayer`: Number of conv or mg-conv layers in each block (set 1 for VGG-6/NMG-6/P-NMG-9/RES-12/R-NMG-12/PR-NMG-16, 2 for VGG-11/NMG-11/P-NMG-16/RES-22/R-NMG-22/PR-NMG-30, ... etc)
+
+
+### Segmentation/Spatial-transformation over MNIST-cluttered
+```
+> sh scripts/unet.sh (or prnmg.mnist.sh, pnmg.mnist.sh)
+```
+
+##### Options:
+* `-dataset`:  mnist-seg (segmentation), mnist-spt (spatial transformation), mnist-rot (pure rotation), mnist-sca (pure scaling), mnist-tra (pure translation), mnist-aff (pure affine transformation)
+
+##### Testing:
+
+Take segmentation for example, the fullpath of the trained models would be `checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/model_200.t7`.
+
+First, add the following line in `scripts/mnist-seg.sh`
+```
+-retrain checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/model_200.t7
+```
+Second, change the option `-dataset` mnist-spt to mnist-seg in the script.
+
+Last, run the testing code which will compute the meanIU and meanAcc of the predictions. Also, the predictions would be saved to `checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/testOutput_1.h5`
+```
+> sh scripts/mnist-seg.sh
+```
+
+### Other Options
 Modify the training scripts to customize your options
 
 ##### Batch size
@@ -67,19 +96,6 @@ As a result, the real batch size = iterSize x batchSize
 Please make sure that model return from `MODEL.lua` is `nn.DataParallelTable` (see [this](https://github.com/buttomnutstoast/Neural-MultiGrid/blob/master/models/prnmg.lua#L402-L406))
 
 If you have more GPUs and want to save your time, set `nGPU`, `batchSize` larger and `iterSize` smaller, vice versa
-
-##### For VGG, NMG, P-NMG, R-NMG, PR-NMG over Cifar100
-* `-nLayer`: Number of conv or mg-conv layers in each block
-
-##### For spatial transformer or segmentation
-```
--dataset:  mnist-seg (segmentation)
-        || mnist-spt (spatial transformation)
-        || mnist-rot (pure rotation)
-        || mnist-sca (pure scaling)
-        || mnist-tra (pure translation)
-        || mnist-aff (pure affine transformation)
-```
 
 ##### For saliency map
 * `-trainedNet`: path to trained network to render saliency map
