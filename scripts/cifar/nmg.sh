@@ -1,0 +1,14 @@
+th main.lua \
+-data $HOME_PREFIX/data/Cifar100-whitened \
+-dataset cifar100-whitened \
+-nDonkeys 4 \
+-nEpochs 200 \
+-epochSize 300 \
+-batchSize 128 \
+-imageSize 36 \
+-imageCrop 32 \
+-colorspace bgr \
+-netType cifar/nmg \
+-nLayer 2 \
+-nEpochsSave 60 \
+-train -test

@@ -1,0 +1,13 @@
+th main.lua \
+-data $HOME_PREFIX/data/ILSVRC2012/Img \
+-dataset ilsvrc \
+-nDonkeys 10 \
+-nEpochs 200 \
+-epochSize 10000 \
+-batchSize 64 \
+-iterSize 4 \
+-colorspace bgr \
+-netType ilsvrc/rnmg \
+-depth 34 \
+-nGPU 4 \
+-train -test

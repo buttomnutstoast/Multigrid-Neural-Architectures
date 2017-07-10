@@ -1,0 +1,12 @@
+th main.lua \
+-data $HOME_PREFIX/data/mnist-cluttered \
+-dataset mnist-aff \
+-nDonkeys 4 \
+-nEpochs 200 \
+-epochSize 800 \
+-batchSize 64 \
+-colorspace bgr \
+-netType mnist-cluttered/pnmg.mnist \
+-nEpochsSave 60 \
+-nGPU 2 \
+-train -test
