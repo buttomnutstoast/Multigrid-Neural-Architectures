@@ -1,5 +1,14 @@
 # Multigrid Neural Architecture
-This implements the work from Multigrid Neural Architecture by [Tsung-Wei Ke](https://www1.icsi.berkeley.edu/~twke/), [Michael Maire](http://ttic.uchicago.edu/~mmaire/) and [Stella Yu](https://www1.icsi.berkeley.edu/~stellayu/).
+This implements the work from [Multigrid Neural Architecture](https://arxiv.org/abs/1611.07661) by [Tsung-Wei Ke](https://www1.icsi.berkeley.edu/~twke/), [Michael Maire](http://ttic.uchicago.edu/~mmaire/) and [Stella Yu](https://www1.icsi.berkeley.edu/~stellayu/).
+
+![multigrid_cnn](/figures/multigrid_cnn.png)
+
+We propose a multigrid extension of convolutional neural networks (CNNs). Rather than manipulating representations living on a single spatial grid, our network layers operate across scale space, on a pyramid of grids. They consume multigrid inputs and produce multigrid outputs; convolutional filters themselves have both within-scale and cross-scale extent. This aspect is distinct from simple multiscale designs, which only process the input at different scales. Viewed in terms of information flow, a multigrid network passes messages across a spatial pyramid. As a consequence, receptive field size grows exponentially with depth, facilitating rapid integration of context. Most critically, multigrid structure enables networks to learn internal attention and dynamic routing mechanisms, and use them to accomplish tasks on which modern CNNs fail.
+
+We demonstrate the network by running our model on different tasks: 1) Classification on cifar100 & ImageNet, 2) Segmentation on cluttered Mnist data, 3) Spatial Transformation on cluttered Mnist data. The following figure shows the multigrid convolutional and multigrid residual convolutional layer used in our network.
+
+![multigrid_cnn](/figures/multigrid_layers.png)
+
 
 ### Prerequisites
 
