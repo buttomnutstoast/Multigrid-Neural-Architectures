@@ -75,6 +75,19 @@ Make sure that all .t7 files for mnist-cluttered data are put under `HOME_PREFIX
 
 * `-nLayer`: Number of conv or mg-conv layers in each block (set 1 for VGG-6/NMG-6/P-NMG-9/RES-12/R-NMG-12/PR-NMG-16, 2 for VGG-11/NMG-11/P-NMG-16/RES-22/R-NMG-22/PR-NMG-30, ... etc)
 
+***Top-1 prediction error over cifar100***:
+
+Network | Params(x10^6) | FLOPs(x10^6) | Error (%)
+--------|---------------|--------------|----------
+MG-6 | 8.34 | 116.63 | 32.08
+MG-11 | 20.46 | 391.88 | 28.39
+MG-16 | 32.58 | 667.13 | 29.91
+MG-21 | 44.68 | 942.38 | 30.03
+R-MG-12 | 20.56 | 457.20 | 27.84
+R-MG-22 | 44.79 | 1007.70 | 26.79
+R-MG-32 | 69.02 | 1558.20 | 25.29
+R-MG-42 | 93.26 | 2108.71 | 26.32
+
 ### Training for ImageNet
 
 ```
@@ -83,6 +96,15 @@ Make sure that all .t7 files for mnist-cluttered data are put under `HOME_PREFIX
 
 #### options:
 * `-nGPU`: Number of GPU used for training, set to 1 if you have onlye one GPU available (which is very slow).
+
+***Top-1 prediction error over validation set of ImageNet***:
+
+Network | Params(x10^6) | FLOPs(x10^9) | val, 10-crop (%) | val, single-crop (%)
+--------|---------------|--------------|------------------|-----------------
+ResNet-50 | 25.6 | 4.46 | 22.85 | -
+WRN-34 (2.0) | 48.6 | 14.09 | - | 24.50
+R-MG-34 | 32.9 | 5.76 | 22.42 | 24.51
+
 
 
 ### Segmentation/Spatial-transformation over MNIST-cluttered
@@ -109,6 +131,9 @@ Take segmentation for example, the fullpath of the trained models would be `chec
 > sh scripts/mnist-seg.sh
 ```
 
+***Spatial transformation over cluttered MNIST***:
+![spatial_transform](/figures/spatial_transform.png)
+
 ##### Generating Saliency Map
 
 1. Add the following line to `scripts/mnist-cluttered/mnist-saliency.sh`
@@ -117,3 +142,6 @@ Take segmentation for example, the fullpath of the trained models would be `chec
 ```
 
 2. Run the script
+
+***Saliency Map of Unet/MG***:
+![saliency_map](/figures/saliency_map.png)
