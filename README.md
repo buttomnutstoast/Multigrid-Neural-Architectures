@@ -37,7 +37,7 @@ Please make sure that following libraries are well installed.
 > luarocks install nccl
 ```
 
-### Prepare for dataset 
+### Prepare for dataset
 
 * Download `cifar100_whitened.t7` from [Here](https://yadi.sk/d/em4b0FMgrnqxy), put the .t7 file under `HOME_PREFIX/data/Cifar100-whitened/`.
 * Generate datas for MNIST-cluttered (we borrow and revise from [DeepMind's code](https://github.com/deepmind/mnist-cluttered))
@@ -120,7 +120,7 @@ R-MG-34 | 32.9 | 5.76 | 22.42 | 24.51
 
 Take segmentation for example, the fullpath of the trained models would be `checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/model_200.t7`.
 
-1. Add the following line to `scripts/mnist-cluttered/mnist-seg.sh`
+1. Add the following line to `scripts/mnist-cluttered/mnist-test.sh`
 ```
 -retrain checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/model_200.t7
 ```
@@ -128,7 +128,7 @@ Take segmentation for example, the fullpath of the trained models would be `chec
 
 3. Run the script to compute the meanIU and meanAcc of the predictions. Also, the predictions would be saved to `checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/testOutput_1.h5`
 ```
-> sh scripts/mnist-seg.sh
+> sh scripts/mnist-test.sh
 ```
 
 ***Spatial transformation over cluttered MNIST***:

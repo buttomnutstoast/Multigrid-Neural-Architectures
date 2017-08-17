@@ -6,5 +6,5 @@ th main.lua \
 -epochSize 150 \
 -batchSize 64 \
 -colorspace bgr \
--netType mnist-cluttered/mnist-seg \
+-netType mnist-cluttered/mnist-test \
 -test
