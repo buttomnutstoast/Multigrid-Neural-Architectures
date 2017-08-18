@@ -10,7 +10,7 @@ We demonstrate the network by running our model on different tasks: 1) Classific
 ![multigrid_cnn](/figures/multigrid_layers.png)
 
 
-### Prerequisites
+## Prerequisites
 
 Please make sure that following libraries are well installed.
 
@@ -18,7 +18,7 @@ Please make sure that following libraries are well installed.
 * Linux
 * NVIDIA GPU + CUDA + cuDNN
 
-### Getting Started
+## Getting Started
 
 * Install [Torch and dependencies](https://github.com/torch/distro)
 * Install Torch packages `nn`, `cutorch`, `cunn`, `cudnn`, `optim`, `hdf5`
@@ -37,9 +37,16 @@ Please make sure that following libraries are well installed.
 > luarocks install nccl
 ```
 
-### Prepare for dataset
 
-* Download `cifar100_whitened.t7` from [Here](https://yadi.sk/d/em4b0FMgrnqxy), put the .t7 file under `HOME_PREFIX/data/Cifar100-whitened/`.
+## Set up for Environment Path
+```
+> export HOME_PREFIX=/path/to/dataset/rootdir
+```
+
+
+## Prepare for dataset
+
+* Download `cifar100_whitened.t7` from [Here](https://yadi.sk/d/em4b0FMgrnqxy), put the .t7 file under `$HOME_PREFIX/data/Cifar100-whitened/`.
 * Generate datas for MNIST-cluttered (we borrow and revise from [DeepMind's code](https://github.com/deepmind/mnist-cluttered))
 ```
 > cd utils/mnist-cluttered
@@ -58,20 +65,16 @@ Please make sure that following libraries are well installed.
 > th translation.lua
 ```
 
-Make sure that all .t7 files for mnist-cluttered data are put under `HOME_PREFIX/data/mnist-cluttered/`.
+Make sure that all .t7 files for mnist-cluttered data are put under `$HOME_PREFIX/data/mnist-cluttered/`.
 
-### Set up for Environment Path
-```
-> export HOME_PREFIX=/path/to/dataset/rootdir
-```
 
-### Training for Cifar100
+## Training for Cifar100
 
 ```
 > sh scripts/cifar/prnmg.sh (or vgg.sh, resnet.sh, nmg.sh, pnmg.sh, rnmg.sh, prnmg.sh)
 ```
 
-##### Options:
+#### Options:
 
 * `-nLayer`: Number of conv or mg-conv layers in each block (set 1 for VGG-6/NMG-6/P-NMG-9/RES-12/R-NMG-12/PR-NMG-16, 2 for VGG-11/NMG-11/P-NMG-16/RES-22/R-NMG-22/PR-NMG-30, ... etc)
 
@@ -88,7 +91,7 @@ R-MG-22 | 44.79 | 1007.70 | 26.79
 R-MG-32 | 69.02 | 1558.20 | 25.29
 R-MG-42 | 93.26 | 2108.71 | 26.32
 
-### Training for ImageNet
+## Training for ImageNet
 
 ```
 > sh scripts/ilsvrc/rnmg.sh (or prnmgseg.sh)
@@ -107,16 +110,16 @@ R-MG-34 | 32.9 | 5.76 | 22.42 | 24.51
 
 
 
-### Segmentation/Spatial-transformation over MNIST-cluttered
+## Segmentation/Spatial-transformation over MNIST-cluttered
 
 ```
 > sh scripts/mnist-cluttered/unet.sh (or prnmg.mnist.sh, pnmg.mnist.sh)
 ```
 
-##### Options:
+#### Options:
 * `-dataset`:  mnist-seg (segmentation), mnist-spt (spatial transformation), mnist-rot (pure rotation), mnist-sca (pure scaling), mnist-tra (pure translation), mnist-aff (pure affine transformation)
 
-##### Testing for segmentation/spatial-transformation:
+### Testing for segmentation/spatial-transformation:
 
 Take segmentation for example, the fullpath of the trained models would be `checkpoint/mnist-seg/MODEL_PREFIX/DATE_TIME/model_200.t7`.
 
@@ -134,7 +137,7 @@ Take segmentation for example, the fullpath of the trained models would be `chec
 ***Spatial transformation over cluttered MNIST***:
 ![spatial_transform](/figures/spatial_transform.png)
 
-##### Generating Saliency Map
+### Generating Saliency Map
 
 1. Add the following line to `scripts/mnist-cluttered/mnist-saliency.sh`
 ```
